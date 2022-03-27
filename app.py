@@ -16,6 +16,10 @@ class Plate(db.Model):
     def __repr__(self):
         return f"Plate: {self.plate}"
 
+    def __init__(self, plate):
+        self.plate = plate
+
+# Make plates json serializable
 def serialize_plate(plate):
     return {
         "plate": plate.plate,
@@ -36,6 +40,15 @@ def get_plates():
     for plate in plates:
         plate_list.append(serialize_plate(plate))
     return {'plates': plate_list}
+
+# Adding a new plate
+@app.route("/plates", methods=['POST'])
+def create_plate():
+    plate_name = request.json['plate']
+    plate = Plate(plate_name)
+    db.session.add(plate)
+    db.session.commit()
+    return serialize_plate(plate)
 
 if __name__ == "__main__":
     app.run()
