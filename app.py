@@ -16,6 +16,14 @@ class Plate(db.Model):
     def __repr__(self):
         return f"Plate: {self.plate}"
 
+def serialize_plate(plate):
+    return {
+        "plate": plate.plate,
+        "owner": plate.owner,
+        "start_date": plate.start_date,
+        "end_date": plate.end_date
+    }
+
 @app.route("/")
 def home():
     return "Hello, Flask!"
@@ -26,7 +34,7 @@ def get_plates():
     plates = Plate.query.order_by(Plate.plate.asc()).all()
     plate_list = []
     for plate in plates:
-        plate_list.append(plate)
+        plate_list.append(serialize_plate(plate))
     return {'plates': plate_list}
 
 if __name__ == "__main__":
