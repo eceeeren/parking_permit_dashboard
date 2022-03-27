@@ -20,5 +20,14 @@ class Plate(db.Model):
 def home():
     return "Hello, Flask!"
 
+# Get all the plates
+@app.route("/plates", methods=['GET'])
+def get_plates():
+    plates = Plate.query.order_by(Plate.plate.asc()).all()
+    plate_list = []
+    for plate in plates:
+        plate_list.append(plate)
+    return {'plates': plate_list}
+
 if __name__ == "__main__":
     app.run()
