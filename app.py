@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -10,8 +10,8 @@ migrate = Migrate(app, db)
 class Plate(db.Model):
     plate = db.Column(db.String, primary_key=True)
     owner = db.Column(db.String, nullable = True)
-    start_time = db.Column(db.DateTime, nullable = True)
-    end_time = db.Column(db.DateTime, nullable = True)
+    start_date = db.Column(db.DateTime, nullable = True)
+    end_date = db.Column(db.DateTime, nullable = True)
 
     def __repr__(self):
         return f"Plate: {self.plate}"
