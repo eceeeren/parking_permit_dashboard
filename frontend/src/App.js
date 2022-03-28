@@ -68,6 +68,24 @@ function App() {
     }
   };
 
+  function sortByKey(array, key) {
+    return array.sort((a, b) => {
+      let x = a[key];
+      let y = b[key];
+
+      return x < y ? -1 : x > y ? 1 : 0;
+    });
+  }
+
+  const sortElements = (e) => {
+    if (e.target.value.length != 0) {
+      const sorted_plates = sortByKey(this.plates, e.target.value);
+      setPlatesList(sorted_plates);
+    } else {
+      getPlates();
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -116,6 +134,17 @@ function App() {
             onChange={filterPlateNames}
           />
           <SearchBar placeholder="Filter by Owner" onChange={filterOwners} />
+          <div className="comparison">
+            <label>
+              Sort:
+              <select value="" onChange={sortElements}>
+                <option value="plate">Plate Number</option>
+                <option value="owner">Owner Name</option>
+                <option value="start_date">Start Date</option>
+                <option value="end_date">End Date</option>
+              </select>
+            </label>
+          </div>
           <ul>
             {platesList.map((plate) => (
               <ListItem list={plate} />

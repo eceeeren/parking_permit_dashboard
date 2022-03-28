@@ -4,7 +4,7 @@ import { format } from "date-fns";
 function ListItem(props) {
   return (
       <li key={props.list.plate}>
-        <div style={{ textAlign: "left" }}>
+        <div style={{ textAlign: "left", fontSize: 16 }}>
           Plate Number: {props.list.plate}
           <br />
           Owner: {props.list.owner}
