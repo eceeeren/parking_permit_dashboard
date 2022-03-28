@@ -36,7 +36,7 @@ def home():
     return "Hello, Flask!"
 
 # Get all the plates
-@app.route("/plates", methods=['GET'])
+@app.route("/plate", methods=['GET'])
 def get_plates():
     plates = Plate.query.order_by(Plate.plate.asc()).all()
     plate_list = []
@@ -45,7 +45,7 @@ def get_plates():
     return {'plates': plate_list}
 
 # Adding a new plate
-@app.route("/plates", methods=['POST'])
+@app.route("/plate", methods=['POST'])
 def create_plate():
     plate_name = request.json['plate']
     owner = request.json['owner']
