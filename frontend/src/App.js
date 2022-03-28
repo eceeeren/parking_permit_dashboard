@@ -21,9 +21,13 @@ function App() {
     setInputs({ ...inputs, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
+    try {
+      await axios.post(`${baseUrl}/plate`, inputs);
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   const getPlates = async () => {
@@ -66,7 +70,7 @@ function App() {
           <input
             onChange={handleChange}
             value={inputs.start_date}
-            type="text"
+            type="date"
             name="start_date"
             id="start_date"
           />
@@ -75,7 +79,7 @@ function App() {
           <input
             onChange={handleChange}
             value={inputs.end_date}
-            type="text"
+            type="date"
             name="end_date"
             id="end_date"
           />
