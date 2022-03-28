@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
-import listItem from "./components/listItem"
+import ListItem from "./components/listItem";
 
 const baseUrl = "http://localhost:5000";
 
@@ -89,7 +89,7 @@ function App() {
           <br />
           <h4>Plates List</h4>
           <ul>
-            {platesList.map((plate) => <listItem/>)}
+            {platesList.map((plate) => <ListItem list={plate}/>)}
           </ul>
         </form>
       </header>
