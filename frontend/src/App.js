@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "./App.css";
 import ListItem from "./components/listItem";
+import SearchBar from "./components/searchBar";
 
 const baseUrl = "http://localhost:5000";
 
@@ -15,6 +16,7 @@ const plateInfo = {
 function App() {
   const [inputs, setInputs] = useState(plateInfo);
   const [platesList, setPlatesList] = useState([]);
+  const [plateSearch, setPlateSearch] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +46,28 @@ function App() {
   useEffect(() => {
     getPlates();
   }, []);
+
+  const filterPlateNames = (e) => {
+    if (e.target.value.length != 0) {
+      const plates = platesList.filter((plate) =>
+        plate.plate.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setPlatesList(plates);
+    } else {
+      getPlates();
+    }
+  };
+
+  const filterOwners = (e) => {
+    if (e.target.value.length != 0) {
+      const plates = platesList.filter((plate) =>
+        plate.owner.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setPlatesList(plates);
+    } else {
+      getPlates();
+    }
+  };
 
   return (
     <div className="App">
@@ -88,8 +112,15 @@ function App() {
           <button type="submit">Submit</button>
           <br />
           <h4>Plates List</h4>
+          <SearchBar
+            placeholder="Filter by Plate Name"
+            onChange={filterPlateNames}
+          />
+          <SearchBar placeholder="Filter by Owner" onChange={filterOwners} />
           <ul>
-            {platesList.map((plate) => <ListItem list={plate}/>)}
+            {platesList.map((plate) => (
+              <ListItem list={plate} />
+            ))}
           </ul>
         </form>
       </header>
