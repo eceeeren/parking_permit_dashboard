@@ -16,7 +16,6 @@ const plateInfo = {
 function App() {
   const [inputs, setInputs] = useState(plateInfo);
   const [platesList, setPlatesList] = useState([]);
-  const [plateSearch, setPlateSearch] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;

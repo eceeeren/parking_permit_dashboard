@@ -1,4 +1,5 @@
 import { React } from "react";
+import { format } from "date-fns";
 
 function ListItem(props) {
   return (
@@ -8,9 +9,9 @@ function ListItem(props) {
           <br />
           Owner: {props.list.owner}
           <br />
-          Start Date: {props.list.start_date}
+          Start Date: {format(new Date(props.list.start_date), "yyyy/MM/dd")}
           <br />
-          End Date: {props.list.end_date}
+          End Date: {format(new Date(props.list.end_date), "yyyy/MM/dd")}
           <br />
         </div>
       </li>
