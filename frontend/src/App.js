@@ -25,6 +25,7 @@ function App() {
     e.preventDefault();
     try {
       await axios.post(`${baseUrl}/plate`, inputs);
+      getPlates();
     } catch (err) {
       console.error(err.message);
     }
