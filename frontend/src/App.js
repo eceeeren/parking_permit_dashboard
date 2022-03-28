@@ -10,20 +10,35 @@ const plateInfo = {
   owner: "",
   start_date: "",
   end_date: "",
-}
+};
 
 function App() {
   const [inputs, setInputs] = useState(plateInfo);
+  const [platesList, setPlatesList] = useState([]);
 
-  const handleChange = (event) => {
-    const {name, value} = event.target;
-    setInputs({...inputs, [name]: value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs)
+    console.log(inputs);
   };
+
+  const getPlates = async () => {
+    try {
+      const data = await axios.get(`${baseUrl}/plate`);
+      const { plates } = data.data;
+      setPlatesList(plates);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getPlates();
+  }, []);
 
   return (
     <div className="App">
@@ -66,6 +81,26 @@ function App() {
           />
           <br />
           <button type="submit">Submit</button>
+          <br />
+          <h4>Plates List</h4>
+          <ul>
+            {platesList.map((plate) => {
+              return (
+                <li key={plate.plate}>
+                  <div style={{textAlign: 'left'}}>
+                    Plate Number: {plate.plate}
+                    <br />
+                    Owner: {plate.owner}
+                    <br />
+                    Start Date: {plate.start_date}
+                    <br />
+                    End Date: {plate.end_date}
+                    <br />
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         </form>
       </header>
     </div>

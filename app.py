@@ -1,11 +1,13 @@
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:parola321@localhost/parking_permit_db'
 migrate = Migrate(app, db)
+CORS(app)
 
 class Plate(db.Model):
     plate = db.Column(db.String, primary_key=True)
