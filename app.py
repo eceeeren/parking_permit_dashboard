@@ -52,20 +52,23 @@ def validate_plate(plate):
             first_part = plate_split[0]
             second_part = plate_split[1]
             group_second = re.match(r"([a-z]+)([0-9]+)", second_part, re.I)
-            group_second = group_second.groups()
 
             if len(first_part) > 3 or len(first_part) < 1 or type(first_part) != str:
                 response = not_valid
 
-            if len(group_second) != 2:
-                response = not_valid
-            elif not group_second[1].isdigit():
-                response = not_valid
+            if group_second is not None: 
+                group_second_groups = group_second.groups()
+                if len(group_second_groups) != 2:
+                    response = not_valid
+                elif not group_second_groups[1].isdigit():
+                    response = not_valid
+                else:
+                    if len(group_second_groups[0]) > 2 or len(group_second_groups[0]) < 1 or type(group_second_groups[0]) != str:
+                        response = not_valid
+                    elif len(group_second_groups[1]) > 4 or len(group_second_groups[1]) < 1 or group_second_groups[1][0] == '0':
+                        response = not_valid
             else:
-                if len(group_second[0]) > 2 or len(group_second[0]) < 1 or type(group_second[0]) != str:
-                    response = not_valid
-                elif len(group_second[1]) > 4 or len(group_second[1]) < 1 or group_second[1][0] == '0':
-                    response = not_valid
+                response = not_valid
 
     if len(plate.start_date) == 0 or len(plate.end_date) == 0:
         response = not_valid
