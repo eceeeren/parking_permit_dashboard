@@ -16,6 +16,7 @@ const plateInfo = {
 function App() {
   const [inputs, setInputs] = useState(plateInfo);
   const [platesList, setPlatesList] = useState([]);
+  const [comparison, setComparison] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,17 +70,15 @@ function App() {
   };
 
   function sortByKey(array, key) {
-    return array.sort((a, b) => {
-      let x = a[key];
-      let y = b[key];
-
-      return x < y ? -1 : x > y ? 1 : 0;
-    });
+    return array.sort(function(a,b) {
+      return b.key - a.key
+  });
   }
 
   const sortElements = (e) => {
-    if (e.target.value.length != 0) {
-      const sorted_plates = sortByKey(this.plates, e.target.value);
+    setComparison(e.target.value);
+    if (this.comparison.length != 0) {
+      const sorted_plates = sortByKey(this.plates, this.comparison);
       setPlatesList(sorted_plates);
     } else {
       getPlates();
@@ -137,7 +136,7 @@ function App() {
           <div className="comparison">
             <label>
               Sort:
-              <select value="" onChange={sortElements}>
+              <select value={comparison} onChange={sortElements}>
                 <option value="plate">Plate Number</option>
                 <option value="owner">Owner Name</option>
                 <option value="start_date">Start Date</option>
